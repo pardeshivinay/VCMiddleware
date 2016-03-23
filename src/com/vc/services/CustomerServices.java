@@ -23,6 +23,7 @@ import org.json.simple.parser.JSONParser;
 import com.vc.jpa.Customer;
 import com.vc.jpa.CustomerAccountMapping;
 import com.vc.jpa.CustomerOTP;
+import com.vc.util.HttpRequestHandler;
 import com.vc.util.RandomOtp;
 
 @Path("/CustomerServices")
@@ -234,6 +235,7 @@ public class CustomerServices {
 	@Path("/GenerateOTP")
 	public Response generateOTP(InputStream incomingData) {
 		 String message = System.getenv("OTP_MESSAGE");
+		//String message = "Dear Customer Your OTP for QRYS User Activation is #OTP. - QRYS APP";
 		 System.out.println("************ OTP Message ********* "+message);
 		init();
 
@@ -245,7 +247,6 @@ public class CustomerServices {
 		String line = null;
 		RandomOtp randomotp = new RandomOtp();
 		String otp = String.valueOf(randomotp.generatePin());
-		//String message = "Dear Customer Your OTP for QRYS User Activation is $OTP. - QRYS APP";
 		System.out.println("OTP Generated - "+otp);
 		message = message.replace("#OTP", otp);
 		message = message.replace(" ", "+");
@@ -284,7 +285,7 @@ public class CustomerServices {
 				userTran.commit();
 			}
 
-			return Response.ok("OTP sent to customer").build();
+			return Response.ok("{\"Result\":\"OTP sent\",\"resultCode\":\"00\",\"OTP\":\""+otp+"\"}").build();
 		} catch (Exception e) {
 			System.err.println("ERROR creating record-" + e);
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
@@ -380,9 +381,17 @@ public class CustomerServices {
 	
 	
 	public String sendMessage(String mobileNumber, String message) {
-		/*System.out.println("sendMessage = " + message +mobileNumber);
-
-		GetMethod method = null;
+		System.out.println("sendMessage = " + message +mobileNumber);
+		String smsURL = System.getenv("SMS_URL");
+		//String smsURL = "http://enterprise.smsgupshup.com/GatewayAPI/rest?method=SendMessage&send_to=91#MOBILENO&msg=#MESSAGE&msg_type=TEXT&userid=2000125342&auth_scheme=plain&password=qwerty&v=1.1&format=text&mask=QRYSAP";
+		smsURL = smsURL.replace("#MESSAGE", message);
+		smsURL = smsURL.replace("#MOBILENO", mobileNumber);
+		try {
+			String smsResponse = new HttpRequestHandler(smsURL).requestGET();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		/*GetMethod method = null;
 		try {
 			//String msgURL = "http://enterprise.smsgupshup.com/GatewayAPI/rest?method=SendMessage&send_to=91$MOBILENO&msg=$MESSAGE&msg_type=TEXT&userid=2000125342&auth_scheme=plain&password=qwerty&v=1.1&format=text&mask=QRYSAP";
 			String msgURL = System.getenv("SMS_URL");

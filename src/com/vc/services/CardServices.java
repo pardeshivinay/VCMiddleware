@@ -347,7 +347,7 @@ public class CardServices {
 					.toString());
 			System.out.println(json);
 			VirtualCardRestrictions cardRestrictions = new VirtualCardRestrictions();
-			cardRestrictions.setCardId(Integer.parseInt((String) json.get("accountNo")));
+			cardRestrictions.setCardId(Integer.parseInt((String) json.get("cardId")));
 			cardRestrictions.setParamKey((String) json.get("limitType"));
 			cardRestrictions.setParamValue((String) json.get("value"));
 		
