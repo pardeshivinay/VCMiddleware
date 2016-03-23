@@ -1,0 +1,10 @@
+{
+  "CARD_SERVICE_URL" : "http://alphaiciapi2.mybluemix.net/rest/Card/getCardDetails/#customerId/#userId/#authCode",
+  "AUTH_URL" : "http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?client_id=#userId&password=#passcode",
+  "AUTH_PASSCODE" : "ICIC7081",
+  "CARD_USER_ID" : "hemal.kotecha@hotmail.com",
+  "CARD_PASSCODE" : "NA",
+  "AUTH_USER_ID" : "hemal.kotecha@hotmail.com",
+  "OTP_MESSAGE" : "Dear Customer Your OTP for QRYS User Activation is #OTP. - QRYS APP",
+  "SMS_URL" : "http://enterprise.smsgupshup.com/GatewayAPI/rest?method=SendMessage&send_to=91#MOBILENO&msg=#MESSAGE&msg_type=TEXT&userid=2000125342&auth_scheme=plain&password=qwerty&v=1.1&format=text&mask=QRYSAP"
+}

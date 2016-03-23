@@ -1,0 +1,68 @@
+Sample Data
+[
+{"card account_no":"4111133444440469","loan account_no":"LBMUM11112220469","cust_id":"88881469","account_no":"5555666677770469"}, 
+{"card account_no":"4111133444440470","loan account_no":"LBMUM11112220470","cust_id":"88881470","account_no":"5555666677770470"}, 
+{"card account_no":"4111133444440471","loan account_no":"LBMUM11112220471","cust_id":"88881471","account_no":"5555666677770471"}, {"corpid":"13131784","ucc":"767669","custid":"9090902209","rmmobile":"3333445579","userid":"ALEXANDERC- MINIM- OLIVIAM- SEBASTIANC"}]
+
+1.Login
+URL:http://vcmiddleware.mybluemix.net/Middleware/CustomerServices/ValidateCustomer
+Input:{"userId":"88881469","pin":"1234"}
+Output:Login Successful
+
+Following data has been configured in DB(columns - USERID/PIN)
+CUSTOMERID,FIRSTNAME,LASTNAME,MOBILENO,USERID,PIN,GENDER
+5,Mahendra,Dohni,9769670261,88881469,1234,M
+6,Sachin,Tendulkar,9769670261,88881470,1234,M
+7,Virat,Kohli,9769670261,88881471,1234,M
+
+2.Virtual Address List
+URL:http://vcmiddleware.mybluemix.net/Middleware/UPIServices/VirtualAddressList
+Input:{"customerId":"7"}
+Output:[{"customerId":"7","virtualAddress":"vinay@icici","id":0,"accountNo":"5555666677770471"}]
+
+3.Validate Virtual Address
+URL:http://vcmiddleware.mybluemix.net/Middleware/UPIServices/ValidateVirtualAddress
+Input:{"virtualAddress":"vinay1@icici"}
+Output - Virtual Address does not exists
+		 Virtual Address exists
+		 
+4.BankList
+URL:http://vcmiddleware.mybluemix.net/Middleware/BankServices/BankList
+Input:
+Output-[{"name":"ICICI Bank","id":1},{"name":"HDFC Bank","id":2},{"name":"State Bank of India","id":3},{"name":"Axis Bank","id":4},{"name":"Kotak Mahindra Bank","id":5},{"name":"Bank of Baroda","id":6},{"name":"Yes Bank","id":7},{"name":"Canara Bank","id":8},{"name":"Punjab National Bank","id":9},{"name":"IndusInd Bank","id":10}]
+
+5.Generate OTP
+URL:http://vcmiddleware.mybluemix.net/Middleware/CustomerServices/GenerateOTP
+Input:{"customerId":"6"}
+Output-{"Result":"OTP sent","resultCode":"00","OTP":"941514"}
+
+5.Validate OTP
+URL:http://vcmiddleware.mybluemix.net/Middleware/CustomerServices/GenerateOTP
+Input:{"customerId":"6"}
+Output- Not working
+
+6.Virtual Card List
+URL:http://vcmiddleware.mybluemix.net/Middleware/CardServices/VirtualCardList
+Input:{"customerId":"7","virtualAddress":"vinay@icici"}
+Output:[{"virtualAddress":"vinay@icici","ID":0,"isActive":"Y","cardNo":null,"accountNo":"5555666677770471"},{"virtualAddress":"vinay@icici","ID":2,"isActive":"Y","cardNo":"18441473132445328","accountNo":"5555666677770471"}]
+
+7.Create Virtual Card
+URL:http://vcmiddleware.mybluemix.net/Middleware/CardServices/CreateVirtualCard
+Input:{"customerId":"7","virtualAddress":"vinay@icici","accountNo":"5555666677770471","email":"abc@jkl.com","mobileNo":"9769670261","name":"benificiary","status":"Shared"}
+Output:{"accountNo":"5555666677770471","virtualAddress":"vinay@icici","ID":6,"isActive":Y,"cardNo":"70353145780677712"}
+
+8.Account List
+URL:http://vcmiddleware.mybluemix.net/Middleware/CustomerServices/AccountList
+Input:{"customerId":"7"}
+Output:[{"customerId":"7","accountNo":"5555666677770471"}]
+
+9.Set limits
+URL: http://vcmiddleware.mybluemix.net/Middleware/CardServices/SetLimits
+Input:{"cardId":"6","limitType":"DAILY","value":"5000"}
+Output:{"cardId":6,"ID":2,"limitType":"DAILY","value":"5000"}
+
+10.Get physical cards
+URL:http://vcmiddleware.mybluemix.net/Middleware/CBSServices/GetCards
+Input:{"customerId":"7"}
+Output:{"errorCode":"200","errorDescripttion":"success","cardDetails":[{"cardType":"Ruby Credit Card","cardStatus":"Active","current_balance":96000.0,"date_of_enrolemnt":"10/00/2014","month_delinquency":"100321001110","custId":"88881471","expiry_date":"17/07/2025","avail_lmt":"5000"}]}
+
