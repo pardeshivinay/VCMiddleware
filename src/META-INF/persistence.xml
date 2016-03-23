@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="BluemixBoutiquePU">
+		<jta-data-source>java:comp/env/jdbc/bluemixboutiquesql</jta-data-source>
+		<!-- JDBC driver information is in server.xml -->
+		<class>com.vc.jpa.Bank</class>
+		<class>com.vc.jpa.CardTransaction</class>
+		<class>com.vc.jpa.Customer</class>
+		<class>com.vc.jpa.CustomerAccountMapping</class>
+		<class>com.vc.jpa.CustomerOTP</class>
+		<class>com.vc.jpa.MerchantMaster</class>
+		<class>com.vc.jpa.VirtualAddress</class>
+		<class>com.vc.jpa.VirtualCardCustomisation</class>
+		<class>com.vc.jpa.VirtualCardMaster</class>
+		<class>com.vc.jpa.VirtualCardPersonalDetails</class>
+		<class>com.vc.jpa.VirtualCardRestrictions</class>
+		<class>com.vc.jpa.LimitMaster</class>
+		<properties>
+			<!-- allow table definitions/creation on-the-fly -->
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true,schemaAction='drop,add')" />
+			<property name="openjpa.log" value="SQL=TRACE" />
+			
+		</properties>
+	</persistence-unit>
+</persistence>
